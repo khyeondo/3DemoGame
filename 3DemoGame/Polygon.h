@@ -9,25 +9,6 @@ public:
 	float depth;
 
 public:
-	void RotateX(float angle) {
-		for (int i = 0; i < 3; i++)
-		{
-			vertex[i] = vertex[i] * Matrix4X4::GetRotateX(angle);
-		}
-	}
-	void RotateY(float angle) {
-		for (int i = 0; i < 3; i++)
-		{
-			vertex[i] = vertex[i] * Matrix4X4::GetRotateY(angle);
-		}
-	}
-	void RotateZ(float angle) {
-		for (int i = 0; i < 3; i++)
-		{
-			vertex[i] = vertex[i] * Matrix4X4::GetRotateZ(angle);
-		}
-	}
-
 	void Translate(Vec3& vec){
 		for (int i = 0; i < 3; i++)
 		{

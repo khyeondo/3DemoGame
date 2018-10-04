@@ -52,7 +52,6 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 	// BOTTOM                                                    
 	{ Vec3(1.0f, 0.0f, 1.0f),    Vec3(0.0f, 0.0f, 1.0f),    Vec3(0.0f, 0.0f, 0.0f) },
 	{ Vec3(1.0f, 0.0f, 1.0f),    Vec3(0.0f, 0.0f, 0.0f),    Vec3(1.0f, 0.0f, 0.0f) },
-
 	};
 	mesh.LoadFromObjectFile("teaPot.obj");
 	object.SetMesh(&mesh);
@@ -60,30 +59,16 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 	return true;
 }
 
+void Game::update()
+{
+	SetDeltaTime();
+}
+
 void Game::render()
 {
 	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 	SDL_RenderClear(m_pRenderer);
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
-
-	Matrix4X4 matRotZ, matRotX;
-	fTheta += 0.001f;
-
-	// Rotation Z
-	matRotZ.m[0][0] = cosf(fTheta);
-	matRotZ.m[0][1] = sinf(fTheta);
-	matRotZ.m[1][0] = -sinf(fTheta);
-	matRotZ.m[1][1] = cosf(fTheta);
-	matRotZ.m[2][2] = 1;
-	matRotZ.m[3][3] = 1;
-
-	// Rotation X
-	matRotX.m[0][0] = 1;
-	matRotX.m[1][1] = cosf(fTheta * 0.5f);
-	matRotX.m[1][2] = sinf(fTheta * 0.5f);
-	matRotX.m[2][1] = -sinf(fTheta * 0.5f);
-	matRotX.m[2][2] = cosf(fTheta * 0.5f);
-	matRotX.m[3][3] = 1;
+	//SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 
 	//D3Renderer::GetInst()->Draw(meshCube);
 	
@@ -91,21 +76,15 @@ void Game::render()
 	//object.angle = Vec3(14.f, 0.01f, 0.01f);
 	//object.pos = Vec3(14.f, 0.01f, 100.f);
 	D3Renderer::GetInst()->Draw(object);
+
 	D3Renderer::GetInst()->RenderPresent(m_pRenderer);
-
 	SDL_RenderPresent(m_pRenderer);
-}
-
-void Game::update()
-{
 }
 
 void Game::handleEvents()
 {
 	SDL_Event event;
-	Vec3 x = { 5,0,0 };
-	Vec3 y = { 0,5,0 };
-	Vec3 z = { 0,0,5 };
+
 
 	if (SDL_PollEvent(&event))
 	{
@@ -125,36 +104,36 @@ void Game::handleEvents()
 			}
 			if (event.key.keysym.sym == SDLK_LEFT)
 			{
-				D3Renderer::GetInst()->camera.angle.z -= 0.03f;
+				D3Renderer::GetInst()->camera.angle.y -= 0.03f;
 			}
 			if (event.key.keysym.sym == SDLK_RIGHT)
 			{
-				D3Renderer::GetInst()->camera.angle.z += 0.03f;
+				D3Renderer::GetInst()->camera.angle.y += 0.03f;
 			}
 
 			if (event.key.keysym.sym == SDLK_w)
 			{
-				D3Renderer::GetInst()->camera.pos.z += 3.0f;
+				D3Renderer::GetInst()->camera.pos.z += 10.0f*deltaTime;
 			}
 			if (event.key.keysym.sym == SDLK_s)
 			{
-				D3Renderer::GetInst()->camera.pos.z -= 3.0f;
+				D3Renderer::GetInst()->camera.pos.z -= 10.0f*deltaTime;
 			}
 			if (event.key.keysym.sym == SDLK_a)
 			{
-				D3Renderer::GetInst()->camera.pos.x -= 3.0f;
+				D3Renderer::GetInst()->camera.pos.x -= 10.0f*deltaTime;
 			}
 			if (event.key.keysym.sym == SDLK_d)
 			{
-				D3Renderer::GetInst()->camera.pos.x += 3.0f;
+				D3Renderer::GetInst()->camera.pos.x += 10.0f*deltaTime;
 			}
 			if (event.key.keysym.sym == SDLK_z)
 			{
-				D3Renderer::GetInst()->camera.pos.y -= 3.0f;
+				D3Renderer::GetInst()->camera.pos.y -= 10.0f*deltaTime;
 			}
 			if (event.key.keysym.sym == SDLK_x)
 			{
-				D3Renderer::GetInst()->camera.pos.y += 3.0f;
+				D3Renderer::GetInst()->camera.pos.y += 10.0f*deltaTime ;
 			}
 			break;
 		//case SDL_MOUSEMOTION:
@@ -175,4 +154,12 @@ void Game::clean()
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
+}
+
+void Game::SetDeltaTime()
+{
+	LAST = NOW;
+	NOW = SDL_GetPerformanceCounter();
+
+	deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
 }

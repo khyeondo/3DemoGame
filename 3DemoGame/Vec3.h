@@ -4,7 +4,7 @@
 struct Vec3
 {
 public:
-	float x, y, z, w = 1;
+	float x, y, z, w = 0;
 
 public:
 	Vec3() {}
@@ -67,6 +67,16 @@ public:
 		x = x * f;
 		y = y * f;
 		z = z * f;
+	}
+	void operator *= (Matrix4X4 mat) {
+		Vec3 temp;
+		temp.x = x * mat.m[0][0] + y * mat.m[1][0] + z * mat.m[2][0] + w * mat.m[3][0];
+		temp.y = x * mat.m[0][1] + y * mat.m[1][1] + z * mat.m[2][1] + w * mat.m[3][1];
+		temp.z = x * mat.m[0][2] + y * mat.m[1][2] + z * mat.m[2][2] + w * mat.m[3][2];
+		temp.w = x * mat.m[0][3] + y * mat.m[1][3] + z * mat.m[2][3] + w * mat.m[3][3];
+		x = temp.x;
+		y = temp.y;
+		z = temp.z;
 	}
 	void operator /= (float f)
 	{

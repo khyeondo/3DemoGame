@@ -3,17 +3,6 @@
 
 D3Renderer* D3Renderer::m_pinst = 0;
 
-void D3Renderer::WorldToCamera(Vec3 & in, Vec3 & out)
-{
-	out.x = in.x - camera.pos.x;
-	out.y = in.y - camera.pos.y;
-	out.z = in.z - camera.pos.z;
-
-	out.RotateX(camera.angle.x);
-	out.RotateY(camera.angle.y);
-	out.RotateZ(camera.angle.z);
-}
-
 void D3Renderer::DrawPolygon(SDL_Renderer * pRender, Vec3 * p, Color color, float b)
 {
 	Sint16 x[3] = { p[0].x,p[1].x,p[2].x };
@@ -55,7 +44,7 @@ bool D3Renderer::Init(int screenH, int screenW)
 	matProj.m[2][2] = camera.far / (camera.far - camera.near);
 	matProj.m[3][2] = (-camera.far * camera.near) / (camera.far - camera.near);
 	matProj.m[2][3] = 1.f;
-	matProj.m[3][3] = 0.0f;
+	//matProj.m[3][3] = 0.0f;
 
 	return true;
 }
@@ -97,7 +86,8 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 	//	poly.depth = 
 	//		(poly.vertex[0].z + poly.vertex[1].z + poly.vertex[2].z) / 3.0f;
 	//}
-	//Polygon의 depth값을 구해서 출력순서를 나열한다.
+
+	//Polygon의 평균z값을 구해서 출력순서를 나열한다.
 	sort(vecPoly.begin(), vecPoly.end(), [](Polygon& p1, Polygon& p2)
 	{
 		float d1 = (p1.vertex[0].z + p1.vertex[1].z + p1.vertex[2].z) / 3.0f;
@@ -106,7 +96,7 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 	});
 
 	//Camera to Viewer
-	for (auto poly : vecPoly)
+	for (auto& poly : vecPoly)
 	{
 		Vec3 p[3];
 		Vec3 light(0.0f, -1.0f, 0.0f);
@@ -117,8 +107,10 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 		float brightness = poly.normalVec.x * light.x + 
 			poly.normalVec.y * light.y + poly.normalVec.z * light.z;
 
-		brightness += 1.f; brightness /= 4.f; 
-		brightness += 0.5f;
+		//brightness -1 ~ 1
+		//brightness += 1.f; brightness *= 3.f/8.f; 
+		//brightness += 0.25f;
+		brightness += 1.f; brightness *= (1.f/2.f);
 
 		bool isDraw = true;
 		for (int i = 0; i < 3; i++)
@@ -158,18 +150,30 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 	vecPoly.clear();
 }
 
-void D3Renderer::Draw(Mesh & mesh)
+void D3Renderer::WorldToCamera(Mesh & mesh)
 {	
-	for (auto poly : mesh.polys)
-	{	
-		Polygon temp;
+	Matrix4X4 rotateX;
+	Matrix4X4 rotateY;
+	Matrix4X4 rotateZ;
 
-		WorldToCamera(poly.vertex[0], temp.vertex[0]);
-		WorldToCamera(poly.vertex[1], temp.vertex[1]);
-		WorldToCamera(poly.vertex[2], temp.vertex[2]);
-		
-		if (!(temp.vertex[0].z < 0 || temp.vertex[1].z < 0 || temp.vertex[1].z < 0))//z가 양수일때만 
-			vecPoly.push_back(temp);
+	Matrix4X4::MakeRotationX(rotateX, camera.angle.x);
+	Matrix4X4::MakeRotationY(rotateY, camera.angle.y);
+	Matrix4X4::MakeRotationZ(rotateZ, camera.angle.z);
+
+	
+	for (auto& poly : mesh.polys)
+	{		
+		for (int j = 0; j < 3; j++)
+		{
+			poly.vertex[j] -= camera.pos;
+
+			poly.vertex[j] *= rotateX;
+			poly.vertex[j] *= rotateY;
+			poly.vertex[j] *= rotateZ;
+		}
+
+		if (!(poly.vertex[0].z < 0 || poly.vertex[1].z < 0 || poly.vertex[1].z < 0))//z가 양수일때만 
+			vecPoly.push_back(poly);
 	}
 }
 
@@ -180,11 +184,19 @@ void D3Renderer::Draw(D3Object& object)
 	mesh.polys.assign(object.GetMesh()->polys.begin(),
 		object.GetMesh()->polys.end());
 	
-	mesh.RotateX(object.GetAngle().x);
-	mesh.RotateY(object.GetAngle().y);
-	mesh.RotateZ(object.GetAngle().z);
+	Matrix4X4 rotateX;
+	Matrix4X4 rotateY;
+	Matrix4X4 rotateZ;
+
+	Matrix4X4::MakeRotationX(rotateX, object.GetAngle().x);
+	Matrix4X4::MakeRotationY(rotateY, object.GetAngle().y);
+	Matrix4X4::MakeRotationZ(rotateZ, object.GetAngle().z);
+
+	mesh *= rotateX;
+	mesh *= rotateY;
+	mesh *= rotateZ;
 
 	mesh.Translate(Vec3(-object.GetPos().x, -object.GetPos().y,
 		-object.GetPos().z));
-	Draw(mesh);
+	WorldToCamera(mesh);
 }

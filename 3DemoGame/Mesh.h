@@ -8,34 +8,28 @@ struct Mesh
 {
 	vector<Polygon> polys;
 	
-	void RotateX(float angle) {
-		for (int i = 0; i < polys.size(); i++)
+	void operator *= (Matrix4X4& mat)
+	{
+		//int size = polys.size();
+		//for (int i = 0; i < size; i++)
+		//{
+		//	Polygon& poly = polys[i];
+		//	poly.vertex[0] *= mat;
+		//	poly.vertex[1] *= mat;
+		//	poly.vertex[2] *= mat;
+		//}
+		for (auto& poly : polys)
 		{
-			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateX(angle);
-			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateX(angle);
-			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateX(angle);
-		}
-	}
-	void RotateY(float angle) {
-		for (int i = 0; i < polys.size(); i++)
-		{
-			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateY(angle);
-			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateY(angle);
-			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateY(angle);
-		}
-	}
-	void RotateZ(float angle) {
-		for (int i = 0; i < polys.size(); i++)
-		{
-			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateZ(angle);
-			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateZ(angle);
-			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateZ(angle);
+			poly.vertex[0] *= mat;
+			poly.vertex[1] *= mat;
+			poly.vertex[2] *= mat;
 		}
 	}
 
 	void Translate(Vec3 vec)
 	{
-		for (int i = 0; i < polys.size(); i++)
+		int size = polys.size();
+		for (int i = 0; i < size; i++)
 		{
 			polys[i].Translate(vec);
 		}
