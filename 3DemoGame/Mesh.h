@@ -11,36 +11,33 @@ struct Mesh
 	void RotateX(float angle) {
 		for (int i = 0; i < polys.size(); i++)
 		{
-			for (int j = 0; j < 3; j++)
-			{
-				polys[i].vertex[j].RotateX(angle);
-			}
+			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateX(angle);
+			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateX(angle);
+			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateX(angle);
 		}
 	}
 	void RotateY(float angle) {
 		for (int i = 0; i < polys.size(); i++)
 		{
-			for (int j = 0; j < 3; j++)
-			{
-				polys[i].vertex[j].RotateY(angle);
-			}
+			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateY(angle);
+			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateY(angle);
+			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateY(angle);
 		}
 	}
 	void RotateZ(float angle) {
 		for (int i = 0; i < polys.size(); i++)
 		{
-			for (int j = 0; j < 3; j++)
-			{
-				polys[i].vertex[j].RotateZ(angle);
-			}
+			polys[i].vertex[0] = polys[i].vertex[0] * Matrix4X4::GetRotateZ(angle);
+			polys[i].vertex[1] = polys[i].vertex[1] * Matrix4X4::GetRotateZ(angle);
+			polys[i].vertex[2] = polys[i].vertex[2] * Matrix4X4::GetRotateZ(angle);
 		}
 	}
 
 	void Translate(Vec3 vec)
 	{
-		for (auto poly : polys)
+		for (int i = 0; i < polys.size(); i++)
 		{
-			poly.Translate(vec);
+			polys[i].Translate(vec);
 		}
 	}
 

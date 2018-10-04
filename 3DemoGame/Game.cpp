@@ -54,8 +54,8 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 	{ Vec3(1.0f, 0.0f, 1.0f),    Vec3(0.0f, 0.0f, 0.0f),    Vec3(1.0f, 0.0f, 0.0f) },
 
 	};
-	ship.LoadFromObjectFile("teaPot.obj");
-	object.SetMesh(&ship);
+	mesh.LoadFromObjectFile("teaPot.obj");
+	object.SetMesh(&mesh);
 
 	return true;
 }

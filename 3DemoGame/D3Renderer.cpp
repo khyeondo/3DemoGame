@@ -1,5 +1,6 @@
 #include "D3Renderer.h"
 #include <algorithm>
+
 D3Renderer* D3Renderer::m_pinst = 0;
 
 void D3Renderer::WorldToCamera(Vec3 & in, Vec3 & out)
@@ -118,14 +119,17 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 
 		brightness += 1.f; brightness /= 4.f; 
 		brightness += 0.5f;
+
 		bool isDraw = true;
 		for (int i = 0; i < 3; i++)
 		{
-			//MultiplyMatrixVector(poly.vertex[i], p[i], matProj);
+			//원근 투영
 			p[i] = poly.vertex[i] * matProj;
+
 			if (p[i].w != 0) {
 				p[i].x /= p[i].w; p[i].y /= p[i].w; p[i].z /= p[i].w;
 			}
+			//폴리곤이 카메라 밖으로 벗어나면 출력하지 않는다.
 			if ((p[i].z < camera.near || p[i].z > camera.far) ||
 				(p[i].x < -1 || p[i].x > 1) ||
 				(p[i].y < -1 || p[i].y > 1)) {
@@ -157,16 +161,12 @@ void D3Renderer::Draw(Mesh & mesh)
 	for (auto poly : mesh.polys)
 	{	
 		Polygon temp;
-		for (int i = 0; i < 3; i++) {
-			WorldToCamera(poly.vertex[i], temp.vertex[i]);
-		}
-		bool isDraw = true;
-		for (int i = 0; i < 3;  i++)
-		{
-			if (temp.vertex[i].z < 0)
-				isDraw = false;
-		}
-		if(isDraw == true)
+
+		WorldToCamera(poly.vertex[0], temp.vertex[0]);
+		WorldToCamera(poly.vertex[1], temp.vertex[1]);
+		WorldToCamera(poly.vertex[2], temp.vertex[2]);
+		
+		if (!(temp.vertex[0].z < 0 || temp.vertex[1].z < 0 || temp.vertex[1].z < 0))//z가 양수일때만 
 			vecPoly.push_back(temp);
 	}
 }
@@ -178,9 +178,9 @@ void D3Renderer::Draw(D3Object& object)
 	mesh.polys.assign(object.GetMesh()->polys.begin(),
 		object.GetMesh()->polys.end());
 	
-	//mesh.RotateX(object.GetAngle().x);
-	//mesh.RotateY(object.GetAngle().y);
-	//mesh.RotateZ(object.GetAngle().z);
+	mesh.RotateX(object.GetAngle().x);
+	mesh.RotateY(object.GetAngle().y);
+	mesh.RotateZ(object.GetAngle().z);
 
 	mesh.Translate(Vec3(-object.GetPos().x, -object.GetPos().y,
 		-object.GetPos().z));

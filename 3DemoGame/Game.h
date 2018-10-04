@@ -11,7 +11,7 @@ private:
 	bool m_bRunning;
 
 	Mesh meshCube;
-	Mesh ship;
+	Mesh mesh;
 	int screenWidth, screenHeight;
 	float fTheta = 1;
 
@@ -28,5 +28,4 @@ public:
 	void handleEvents();
 	void clean();
 	bool running() { return m_bRunning; }
-
 };

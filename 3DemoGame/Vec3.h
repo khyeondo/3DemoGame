@@ -37,7 +37,7 @@ public:
 		temp.y = y * f;
 		temp.z = z * f;
 	}
-	Vec3 operator * (Matrix4X4 &mat) {
+	Vec3 operator * (Matrix4X4 mat) {
 		Vec3 temp;
 		temp.x = x * mat.m[0][0] + y * mat.m[1][0] + z * mat.m[2][0] + w * mat.m[3][0];
 		temp.y = x * mat.m[0][1] + y * mat.m[1][1] + z * mat.m[2][1] + w * mat.m[3][1];
