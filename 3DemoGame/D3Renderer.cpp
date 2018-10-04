@@ -126,9 +126,11 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 			//원근 투영
 			p[i] = poly.vertex[i] * matProj;
 
-			if (p[i].w != 0) {
-				p[i].x /= p[i].w; p[i].y /= p[i].w; p[i].z /= p[i].w;
-			}
+			//if (p[i].w != 0) {
+			//	p[i].x /= p[i].w; p[i].y /= p[i].w; p[i].z /= p[i].w;
+			//}
+			p[i].x /= p[i].w; p[i].y /= p[i].w; p[i].z /= p[i].w;
+
 			//폴리곤이 카메라 밖으로 벗어나면 출력하지 않는다.
 			if ((p[i].z < camera.near || p[i].z > camera.far) ||
 				(p[i].x < -1 || p[i].x > 1) ||
