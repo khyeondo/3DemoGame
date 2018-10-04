@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{46aaabcb-75c1-42ce-ba1a-00ba0c9195b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender">
+      <UniqueIdentifier>{7ca5f959-dd92-469f-8d2c-5cc75d5b1b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Structs">
+      <UniqueIdentifier>{ca9c6e58-34d4-4e7a-b8f5-8ee6bad996e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL2_gfxPrimitives">
+      <UniqueIdentifier>{35810826-f26a-4243-afe0-ca0e25969b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\02.Camera">
+      <UniqueIdentifier>{cebdbbb4-0ca1-4a64-9f50-02dcc8f718cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\01.D3Renderer">
+      <UniqueIdentifier>{5d55af7d-697c-4e8e-bf8c-0e6e4fe92e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\03.Vec3">
+      <UniqueIdentifier>{70cb4690-f8a4-4ac3-ac2f-c3fa736a9fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\05.Mesh">
+      <UniqueIdentifier>{9fc5c1cf-3708-49b7-8eb8-b6ed52994a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\06.D3Object">
+      <UniqueIdentifier>{7178e946-d893-48c1-95fc-c74c96df2867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DRender\04.Polygon">
+      <UniqueIdentifier>{c765ca25-6e81-48f2-b857-aa5115a67e80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="D3Renderer.cpp">
+      <Filter>3DRender\01.D3Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_rotozoom.c">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfxPrimitives.c">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="D3Object.cpp">
+      <Filter>3DRender\06.D3Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="defulte.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>3DRender\02.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="D3Renderer.h">
+      <Filter>3DRender\01.D3Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4X4.h">
+      <Filter>헤더 파일\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives_font.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_rotozoom.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>헤더 파일\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="D3Object.h">
+      <Filter>3DRender\06.D3Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>3DRender\04.Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3.h">
+      <Filter>3DRender\03.Vec3</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>3DRender\05.Mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
