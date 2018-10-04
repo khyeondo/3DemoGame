@@ -15,7 +15,7 @@ public:
 		this->z = z;
 	}
 
-	Vec3 operator + (Vec3& vec)
+	Vec3 operator + (Vec3 vec)
 	{
 		Vec3 temp;
 		temp.x = x + vec.x;
@@ -23,7 +23,7 @@ public:
 		temp.z = z + vec.z;
 		return temp;
 	}
-	Vec3 operator - (Vec3& vec) {
+	Vec3 operator - (Vec3 vec) {
 		Vec3 temp;
 		temp.x = x - vec.x;
 		temp.y = y - vec.y;
@@ -78,11 +78,21 @@ public:
 	float Length() {
 		return sqrt(powf(x, 2.f) + powf(y, 2.f) + powf(z, 2.f));
 	}
+	//정규화
 	Vec3 Normalize()
 	{
 		float f = this->Length();
 		x /= f; y /= f; z /= f;
 		return *this;
+	}
+	//외적
+	static Vec3 Cross(Vec3 a, Vec3 b)
+	{
+		Vec3 temp;
+		temp.x = a.y * b.z - a.z * b.y;
+		temp.y = a.z * b.x - a.x * b.z;
+		temp.z = a.x * b.y - a.y * b.x;
+		return temp;
 	}
 
 	//축회전
@@ -108,14 +118,5 @@ public:
 		y = tempY * cosf(angle) - tempX * sinf(angle);
 	}
 
-	//외적
-	static Vec3 Cross(Vec3 a, Vec3 b)
-	{
-		Vec3 temp;
-		temp.x = a.y * b.z - a.z * b.y;
-		temp.y = a.z * b.x - a.x * b.z;
-		temp.z = a.x * b.y - a.y * b.x;
-		return temp;
-	}
 };
 

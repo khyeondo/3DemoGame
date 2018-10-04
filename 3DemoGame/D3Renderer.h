@@ -40,10 +40,9 @@ private:
 	};
 
 private:
-	void MultiplyMatrixVector(Vec3& in, Vec3& out, Matrix4X4& m);
 	void WorldToCamera(Vec3& in, Vec3& out);
+	bool CullOff(Vec3 a, Vec3 b, Vec3 c); //후면 처리
 	void DrawPolygon(SDL_Renderer* pRender, Vec3* p, Color color, float b);
-	bool CullOff(Vec3 a, Vec3 b, Vec3 c);
 public:
 	Matrix4X4 GetMatProj() {
 		return matProj;

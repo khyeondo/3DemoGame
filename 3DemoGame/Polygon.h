@@ -28,7 +28,7 @@ public:
 		}
 	}
 
-	void Translate(Vec3 vec){
+	void Translate(Vec3& vec){
 		for (int i = 0; i < 3; i++)
 		{
 			vertex[i].x += vec.x;
