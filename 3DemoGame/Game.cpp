@@ -31,7 +31,7 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 
 	D3Renderer::GetInst()->Init(height, width);
 
-	mesh.LoadFromObjectFile("teaPot.obj");
+	mesh.LoadFromObjectFile("mountains.obj");
 	object.SetMesh(&mesh);
 	return true;
 }

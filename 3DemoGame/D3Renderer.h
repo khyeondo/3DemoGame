@@ -23,7 +23,7 @@ public:
 
 public:
 	Camera camera;
-	Vec3 light = { 0.0f, -1.0f, 0.0f };
+	Vec3 light = { 1.0f, -1.0f, 0.0f };
 
 private:
 	int screenWidth, screenHeight;
