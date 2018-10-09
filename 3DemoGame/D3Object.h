@@ -9,8 +9,12 @@ private:
 
 
 public:	
+	D3Object() {}
+	virtual ~D3Object() {}
+
 	Vec3 pos = { 0.f,0.f,0.f };
 	Vec3 angle = { 0.f,0.f,0.f };
+
 	void SetMesh(Mesh* mesh) {
 		this->mesh = mesh;
 	}

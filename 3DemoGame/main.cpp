@@ -1,19 +1,20 @@
 #include "Game.h"
 
-Game* g_game = 0;
 
 int main(int argc, char* argv[])
 {
-	g_game = new Game();
-	g_game->init("3DGameDemo", 100, 100, 1024, 720, false);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	while (g_game->running())
+	Game::GetInst()->init("3DGameDemo", 100, 100, 1024, 720, false);
+	while (Game::GetInst()->running())
 	{
-		g_game->handleEvents();
-		g_game->update();
-		g_game->render();
+		Game::GetInst()->handleEvents();
+		Game::GetInst()->update();
+		Game::GetInst()->render();
 	}
-	g_game->clean();
-
+	//int* a = new int;
+	Game::GetInst()->clean();
+	Game::GetInst()->DeleteSingle();
+	
 	return 0;
 }

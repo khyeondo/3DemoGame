@@ -27,9 +27,9 @@ public:
 	static Matrix4X4 MakeRotationY(Matrix4X4& mat, float angle)
 	{
 		/*
-		cos		0		-sin	0
+		cos		0		sin		0
 		0		1		0		0
-		sin	    0		cos		0
+		-sin	0 		cos		0
 		0		0		0		1
 		*/
 		mat.m[0][0] = cosf(angle);
@@ -56,4 +56,6 @@ public:
 		mat.m[3][3] = 1;
 		return mat;
 	}
+
+
 };

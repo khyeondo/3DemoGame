@@ -4,15 +4,17 @@
 struct Vec3
 {
 public:
-	float x, y, z, w = 0;
+	float x, y, z = 0;
+	float w = 1;
 
 public:
 	Vec3() {}
-	Vec3(float x, float y, float z)
+	Vec3(float x, float y, float z,float w = 1)
 	{
 		this->x = x;
 		this->y = y;
 		this->z = z;
+		this->w = w;
 	}
 
 	Vec3 operator + (Vec3 vec)
@@ -36,6 +38,8 @@ public:
 		temp.x = x * f;
 		temp.y = y * f;
 		temp.z = z * f;
+
+		return temp;
 	}
 	Vec3 operator * (Matrix4X4 mat) {
 		Vec3 temp;
@@ -77,6 +81,7 @@ public:
 		x = temp.x;
 		y = temp.y;
 		z = temp.z;
+		w = temp.w;
 	}
 	void operator /= (float f)
 	{
@@ -85,24 +90,30 @@ public:
 		z = z / f;
 	}
 	
+	//크기
 	float Length() {
 		return sqrt(powf(x, 2.f) + powf(y, 2.f) + powf(z, 2.f));
 	}
+
 	//정규화
-	Vec3 Normalize()
-	{
+	Vec3 Normalize(){
 		float f = this->Length();
 		x /= f; y /= f; z /= f;
 		return *this;
 	}
+
 	//외적
-	static Vec3 Cross(Vec3 a, Vec3 b)
-	{
+	static Vec3 CrossProduct(Vec3 v1, Vec3 v2){
 		Vec3 temp;
-		temp.x = a.y * b.z - a.z * b.y;
-		temp.y = a.z * b.x - a.x * b.z;
-		temp.z = a.x * b.y - a.y * b.x;
+		temp.x = v1.y * v2.z - v1.z * v2.y;
+		temp.y = v1.z * v2.x - v1.x * v2.z;
+		temp.z = v1.x * v2.y - v1.y * v2.x;
 		return temp;
+	}
+
+	//내적
+	static float DotProduct(Vec3 v1, Vec3 v2) {
+		return v1.x*v2.x + v1.y*v2.y + v1.z * v2.z;
 	}
 
 	//축회전

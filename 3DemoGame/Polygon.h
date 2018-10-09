@@ -6,6 +6,7 @@ struct Polygon
 public:
 	Vec3 vertex[3];
 	Vec3 normalVec;
+	float brightness;
 	float depth;
 
 public:

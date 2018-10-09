@@ -20,17 +20,24 @@ public:
 		m_pinst = 0;
 	}
 #pragma endregion
+
 public:
 	Camera camera;
+	Vec3 light = { 0.0f, -1.0f, 0.0f };
 
 private:
-
 	int screenWidth, screenHeight;
 
 	//원근투영 행렬
 	Matrix4X4 matProj;
+	//카메라 좌표계 행렬
+	Matrix4X4 matLootAt;
+	//뷰포트 행렬
+	Matrix4X4 matViewport;
 
 	vector<Polygon> vecPoly;
+	vector<reference_wrapper<Polygon>> vecInCameraPoly;
+	vector<reference_wrapper<Polygon>> vecCulledPoly;
 
 	struct _Polygon
 	{
@@ -40,21 +47,32 @@ private:
 	};
 
 private:
-	bool CullOff(Vec3 a, Vec3 b, Vec3 c); //후면 처리
-	void DrawPolygon(SDL_Renderer* pRender, Vec3* p, Color color, float b);
-	void WorldToCamera(Mesh& mesh);
+	D3Renderer() {}
+	~D3Renderer() {}
+
+	void RenderingPipeline(SDL_Renderer* pRenderer);
+
+	void LocalToWorld(Mesh& mesh,Vec3 objPos,Vec3 objAngle);
+	void WorldToCamera();
+	void CameraToViewer();
+	void Culling();
+	void Shading();
+	void DepthSort();
+	void ViewerToViewport();
+	void OutPut(SDL_Renderer* pRenderer);
+
+	void DrawPolygon(SDL_Renderer* pRenderer, Vec3* p, Color color, float b);
+	bool CullOff(Polygon& poly); //후면 처리
 
 public:
-	Matrix4X4 GetMatProj() {
-		return matProj;
-	}
-
+	bool Init(int screenH, int screenW);
+	void Draw(D3Object& object);
+	void RenderPresent(SDL_Renderer* pRenderer);
+	
 	void SetCamera(Camera camera) {
 		this->camera = camera;
 	}
-	
-
-	bool Init(int screenH, int screenW);
-	void RenderPresent(SDL_Renderer* pRenderer);
-	void Draw(D3Object& object);
+	Matrix4X4 GetMatProj() {
+		return matProj;
+	}
 };

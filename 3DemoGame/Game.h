@@ -5,37 +5,52 @@
 
 class Game
 {
+#pragma region Single
+private:
+	static Game * m_pinst;
+public:
+	static Game * GetInst() {
+		if (m_pinst == 0)
+			m_pinst = new Game();
+		return m_pinst;
+	}
+	static void DeleteSingle() {
+		if (m_pinst != 0)
+			delete m_pinst;
+		m_pinst = 0;
+	}
+#pragma endregion
+
 private:
 	SDL_Window * m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
-	Uint64 NOW = SDL_GetPerformanceCounter();
-	Uint64 LAST = 0;
-
-	double deltaTime = 0;
 	bool m_bRunning;
+
+	float fps;
+	int startTick;
+
+	char windowTitle[20];
 	int screenWidth, screenHeight;
 
-	Mesh meshCube;
+	bool isKeyHolding[1000] = {false};
+
 	Mesh mesh;
-	float fTheta = 1;
 
 	D3Object object;
-
-	Vec3 x = { 5,0,0 };
-	Vec3 y = { 0,5,0 };
-	Vec3 z = { 0,0,5 };
-public:
+private:
 	Game() {}
+
+public:
 	~Game() {}
 	bool init(const char* title, int xpos, int ypos,
 		int width, int height, bool fullscreen);
 
+	void start();
+	void handleEvents();
 	void update();
 	void render();
-	void handleEvents();
 	void clean();
 	bool running() { return m_bRunning; }
 	
-	void SetDeltaTime();
 };
