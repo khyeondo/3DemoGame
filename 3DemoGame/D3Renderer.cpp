@@ -49,63 +49,79 @@ void D3Renderer::LocalToWorld(Mesh& mesh, Vec3 objPos, Vec3 objAngle)
 
 void D3Renderer::WorldToCamera()
 {	
+	//Vec3 up = { 0,1,0 };
+	//Vec3 target = { 0,0,1 };
+	//
+	//Matrix4X4 rotateX;
+	//Matrix4X4 rotateY;
+	//Matrix4X4::MakeRotationX(rotateX, camera.angle.x);
+	//Matrix4X4::MakeRotationY(rotateY, camera.angle.y);
+	//target *= rotateX;
+	//target *= rotateY;
+	//
+	//camera.lookDir = target;
+	//target = camera.pos + camera.lookDir;
+	//
+	//Vec3 forward = target - camera.pos;
+	//forward.Normalize();
+	//
+	//Vec3 a = forward * Vec3::DotProduct(up, forward);
+	//up -= a;
+	//up.Normalize();
+	//
+	//Vec3 right = Vec3::CrossProduct(up, forward);
+	//
+	////Vec3 right = { camera.forward.z,camera.forward.y,-camera.forward.x };
+	//
+	//matLootAt.m[0][0] = right.x;			matLootAt.m[0][1] = right.y;			matLootAt.m[0][2] = right.z;			matLootAt.m[0][3] = 0.0f;
+	//matLootAt.m[1][0] = up.x;				matLootAt.m[1][1] = up.y;				matLootAt.m[1][2] = up.z;				matLootAt.m[1][3] = 0.0f;
+	//matLootAt.m[2][0] = forward.x;		matLootAt.m[2][1] = forward.y;			matLootAt.m[2][2] = forward.z;			matLootAt.m[2][3] = 0.0f;
+	//matLootAt.m[3][0] = camera.pos.x;		matLootAt.m[3][1] = camera.pos.y;		matLootAt.m[3][2] = camera.pos.z;		matLootAt.m[3][3] = 1.0f;
+	//
+	//Matrix4X4 matrix;
+	//matrix.m[0][0] = matLootAt.m[0][0]; matrix.m[0][1] = matLootAt.m[1][0]; matrix.m[0][2] = matLootAt.m[2][0]; matrix.m[0][3] = 0.0f;
+	//matrix.m[1][0] = matLootAt.m[0][1]; matrix.m[1][1] = matLootAt.m[1][1]; matrix.m[1][2] = matLootAt.m[2][1]; matrix.m[1][3] = 0.0f;
+	//matrix.m[2][0] = matLootAt.m[0][2]; matrix.m[2][1] = matLootAt.m[1][2]; matrix.m[2][2] = matLootAt.m[2][2]; matrix.m[2][3] = 0.0f;
+	//matrix.m[3][0] = -(matLootAt.m[3][0] * matrix.m[0][0] + matLootAt.m[3][1] * matrix.m[1][0] + matLootAt.m[3][2] * matrix.m[2][0]);
+	//matrix.m[3][1] = -(matLootAt.m[3][0] * matrix.m[0][1] + matLootAt.m[3][1] * matrix.m[1][1] + matLootAt.m[3][2] * matrix.m[2][1]);
+	//matrix.m[3][2] = -(matLootAt.m[3][0] * matrix.m[0][2] + matLootAt.m[3][1] * matrix.m[1][2] + matLootAt.m[3][2] * matrix.m[2][2]);
+	//matrix.m[3][3] = 1.0f;
+
+	Matrix4X4 matrixLootAt;
+
 	Vec3 up = { 0,1,0 };
-	Vec3 target = { 0,0,1 };
 
 	Matrix4X4 rotateX;
 	Matrix4X4 rotateY;
 	Matrix4X4::MakeRotationX(rotateX, camera.angle.x);
 	Matrix4X4::MakeRotationY(rotateY, camera.angle.y);
-	target *= rotateX;
-	target *= rotateY;
 
-	camera.lookDir = target;
-	target = camera.pos + camera.lookDir;
+	//Vec3 rotatedDir = camera.lookDir;
 
-	Vec3 forward = target - camera.pos;
-	forward.Normalize();
+	//rotatedDir *= rotateY;
+	//rotatedDir *= rotateX;
 
-	Vec3 a = forward * Vec3::DotProduct(up, forward);
-	up -= a;
-	up.Normalize();
+	Vec3 target = { 0,0,1 };
 
-	Vec3 right = Vec3::CrossProduct(up, forward);
+	//Matrix4X4 rotate = Matrix4X4::Matrix_MultiplyMatrix(rotateY, rotateX);
+	//camera.lookDir = target * rotate;
+	//camera.lookDir = camera.lookDir * rotateX;
 
-	//Vec3 right = { camera.forward.z,camera.forward.y,-camera.forward.x };
-	
-	matLootAt.m[0][0] = right.x;			matLootAt.m[0][1] = right.y;			matLootAt.m[0][2] = right.z;			matLootAt.m[0][3] = 0.0f;
-	matLootAt.m[1][0] = up.x;				matLootAt.m[1][1] = up.y;				matLootAt.m[1][2] = up.z;				matLootAt.m[1][3] = 0.0f;
-	matLootAt.m[2][0] = forward.x;		matLootAt.m[2][1] = forward.y;			matLootAt.m[2][2] = forward.z;			matLootAt.m[2][3] = 0.0f;
-	matLootAt.m[3][0] = camera.pos.x;		matLootAt.m[3][1] = camera.pos.y;		matLootAt.m[3][2] = camera.pos.z;		matLootAt.m[3][3] = 1.0f;
+	Vec3 zaxis = (camera.lookDir - camera.pos).Normalize();
+	Vec3 xaxis = Vec3::CrossProduct(up, zaxis).Normalize();
+	Vec3 yaxis = Vec3::CrossProduct(zaxis, xaxis);
 
-	Matrix4X4 matrix;
-	matrix.m[0][0] = matLootAt.m[0][0]; matrix.m[0][1] = matLootAt.m[1][0]; matrix.m[0][2] = matLootAt.m[2][0]; matrix.m[0][3] = 0.0f;
-	matrix.m[1][0] = matLootAt.m[0][1]; matrix.m[1][1] = matLootAt.m[1][1]; matrix.m[1][2] = matLootAt.m[2][1]; matrix.m[1][3] = 0.0f;
-	matrix.m[2][0] = matLootAt.m[0][2]; matrix.m[2][1] = matLootAt.m[1][2]; matrix.m[2][2] = matLootAt.m[2][2]; matrix.m[2][3] = 0.0f;
-	matrix.m[3][0] = -(matLootAt.m[3][0] * matrix.m[0][0] + matLootAt.m[3][1] * matrix.m[1][0] + matLootAt.m[3][2] * matrix.m[2][0]);
-	matrix.m[3][1] = -(matLootAt.m[3][0] * matrix.m[0][1] + matLootAt.m[3][1] * matrix.m[1][1] + matLootAt.m[3][2] * matrix.m[2][1]);
-	matrix.m[3][2] = -(matLootAt.m[3][0] * matrix.m[0][2] + matLootAt.m[3][1] * matrix.m[1][2] + matLootAt.m[3][2] * matrix.m[2][2]);
-	matrix.m[3][3] = 1.0f;
-
-	//matLootAt.m[0][2] = forward.x;
-	//matLootAt.m[1][2] = forward.y;
-	//matLootAt.m[2][2] = forward.z;
-	//matLootAt.m[0][0] = right.x;
-	//matLootAt.m[1][0] = right.y;
-	//matLootAt.m[2][0] = right.z;
-	//matLootAt.m[0][1] = up.x;
-	//matLootAt.m[1][1] = up.y;
-	//matLootAt.m[2][1] = up.z;
-	//matLootAt.m[3][0] = -camera.pos.x;
-	//matLootAt.m[3][1] = -camera.pos.y;
-	//matLootAt.m[3][2] = -camera.pos.z;
-	//matLootAt.m[3][3] = 1;
+	matrixLootAt.m[0][0] = xaxis.x;  matrixLootAt.m[0][1] = yaxis.x;	  matrixLootAt.m[0][2] = zaxis.x;	   matrixLootAt.m[0][3] = 0;
+	matrixLootAt.m[1][0] = xaxis.y;	 matrixLootAt.m[1][1] = yaxis.y;	  matrixLootAt.m[1][2] = zaxis.y;	   matrixLootAt.m[1][3] = 0;
+	matrixLootAt.m[2][0] = xaxis.z;	 matrixLootAt.m[2][1] = yaxis.z;	  matrixLootAt.m[2][2] = zaxis.z;	   matrixLootAt.m[2][3] = 0;
+	matrixLootAt.m[3][0] = -Vec3::DotProduct(xaxis, camera.pos);    matrixLootAt.m[3][1] = -Vec3::DotProduct(yaxis, camera.pos);
+	matrixLootAt.m[3][2] = -Vec3::DotProduct(zaxis, camera.pos);    matrixLootAt.m[3][3] = 1;
 
 	for (auto& poly : vecPoly)
-	{	
-		poly.vertex[0] *= matrix;
-		poly.vertex[1] *= matrix;
-		poly.vertex[2] *= matrix;
+	{
+		poly.vertex[0] *= matrixLootAt;
+		poly.vertex[1] *= matrixLootAt;
+		poly.vertex[2] *= matrixLootAt;
 
 		if (!(poly.vertex[0].z < 0 || poly.vertex[1].z < 0 || poly.vertex[1].z < 0))//z가 양수일때만 
 			vecInCameraPoly.push_back(poly);

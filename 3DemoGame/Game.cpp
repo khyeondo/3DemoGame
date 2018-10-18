@@ -74,27 +74,33 @@ void Game::update()
 
 	if (isKeyHolding[SDLK_a])
 	{
-		D3Renderer::GetInst()->camera.pos -= D3Renderer::GetInst()->camera.GetRight();
+		D3Renderer::GetInst()->camera.pos.x -= 3.f;
+		D3Renderer::GetInst()->camera.lookDir.x -= 3.f;
 	}
 	if (isKeyHolding[SDLK_d])
 	{
-		D3Renderer::GetInst()->camera.pos += D3Renderer::GetInst()->camera.GetRight();
+		D3Renderer::GetInst()->camera.pos.x += 3.f;
+		D3Renderer::GetInst()->camera.lookDir.x += 3.f;
 	}
 	if (isKeyHolding[SDLK_w])
 	{
-		D3Renderer::GetInst()->camera.pos += D3Renderer::GetInst()->camera.lookDir;
+		D3Renderer::GetInst()->camera.pos.z += 3.f;
+		D3Renderer::GetInst()->camera.lookDir.z += 3.f;
 	}
 	if (isKeyHolding[SDLK_s])
 	{
-		D3Renderer::GetInst()->camera.pos -= D3Renderer::GetInst()->camera.lookDir;
+		D3Renderer::GetInst()->camera.pos.z -= 3.f;
+		D3Renderer::GetInst()->camera.lookDir.z -= 3.f;
 	}
 	if (isKeyHolding[SDLK_z])
 	{
 		D3Renderer::GetInst()->camera.pos.y += 3.0f;
+		D3Renderer::GetInst()->camera.lookDir.y += 3.0f;
 	}
 	if (isKeyHolding[SDLK_x])
 	{
 		D3Renderer::GetInst()->camera.pos.y -= 3.0f;
+		D3Renderer::GetInst()->camera.lookDir.y -= 3.0f;
 	}
 	if (isKeyHolding[SDLK_UP % 107374100])
 	{
