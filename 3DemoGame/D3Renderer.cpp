@@ -96,18 +96,17 @@ void D3Renderer::WorldToCamera()
 	Matrix4X4::MakeRotationX(rotateX, camera.angle.x);
 	Matrix4X4::MakeRotationY(rotateY, camera.angle.y);
 
-	//Vec3 rotatedDir = camera.lookDir;
+	Vec3 rotatedDir = camera.lookDir - camera.pos;
 
 	//rotatedDir *= rotateY;
 	//rotatedDir *= rotateX;
 
 	Vec3 target = { 0,0,1 };
 
-	//Matrix4X4 rotate = Matrix4X4::Matrix_MultiplyMatrix(rotateY, rotateX);
-	//camera.lookDir = target * rotate;
-	//camera.lookDir = camera.lookDir * rotateX;
+	Matrix4X4 rotate = Matrix4X4::Matrix_MultiplyMatrix(rotateX, rotateY);
+	rotatedDir *= rotate;
 
-	Vec3 zaxis = (camera.lookDir - camera.pos).Normalize();
+	Vec3 zaxis = (rotatedDir).Normalize();
 	Vec3 xaxis = Vec3::CrossProduct(up, zaxis).Normalize();
 	Vec3 yaxis = Vec3::CrossProduct(zaxis, xaxis);
 
@@ -288,11 +287,3 @@ void D3Renderer::RenderPresent(SDL_Renderer* pRenderer)
 {
 	RenderingPipeline(pRenderer);
 }
-
-
-
-
-
-
-
-

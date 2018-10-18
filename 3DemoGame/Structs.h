@@ -21,9 +21,9 @@ public:
 	{
 		if (a >= 0 && a <= 1)
 		{
-			r *= a;
-			g *= a;
-			b *= a;
+			r *= (byte)a;
+			g *= (byte)a;
+			b *= (byte)a;
 		}
 	}
 };

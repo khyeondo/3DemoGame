@@ -57,12 +57,12 @@ public:
 		return mat;
 	}
 
-	//static Matrix4X4 Matrix_MultiplyMatrix(Matrix4X4 &m1, Matrix4X4 &m2)
-	//{
-	//	Matrix4X4 matrix;
-	//	for (int c = 0; c < 4; c++)
-	//		for (int r = 0; r < 4; r++)
-	//			matrix.m[r][c] = m1.m[r][0] * m2.m[0][c] + m1.m[r][1] * m2.m[1][c] + m1.m[r][2] * m2.m[2][c] + m1.m[r][3] * m2.m[3][c];
-	//	return matrix;
-	//}
+	static Matrix4X4 Matrix_MultiplyMatrix(Matrix4X4 &m1, Matrix4X4 &m2)
+	{
+		Matrix4X4 matrix;
+		for (int c = 0; c < 4; c++)
+			for (int r = 0; r < 4; r++)
+				matrix.m[r][c] = m2.m[r][0] * m1.m[0][c] + m2.m[r][1] * m1.m[1][c] + m2.m[r][2] * m1.m[2][c] + m2.m[r][3] * m1.m[3][c];
+		return matrix;
+	}
 };

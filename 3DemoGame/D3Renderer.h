@@ -2,7 +2,6 @@
 
 #include "defulte.h"
 #include "Camera.h"
-
 class D3Renderer
 {
 #pragma region Single
