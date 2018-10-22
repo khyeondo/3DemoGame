@@ -6,6 +6,7 @@
 #include <list>
 #include <iterator>
 
+#include <SDL_image.h>
 #include "SDL.h"
 #include "SDL2_gfxPrimitives.h"
 

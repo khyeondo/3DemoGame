@@ -22,6 +22,9 @@ public:
 #pragma endregion
 
 private:
+	SDL_Surface * m_Surface;
+	Uint32* pixels;
+
 	SDL_Window * m_pWindow;
 	SDL_Renderer* m_pRenderer;
 

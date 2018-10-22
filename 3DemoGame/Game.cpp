@@ -31,14 +31,31 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 
 	D3Renderer::GetInst()->Init(height, width);
 
-	mesh.LoadFromObjectFile("mountains.obj");
-	object.SetMesh(&mesh);
 	return true;
 }
 
-
 void Game::start()
 {
+	//m_Surface = SDL_LoadBMP("Assets/animate.bmp");
+	m_Surface = IMG_Load("assets/rider.bmp");
+	D3Renderer::GetInst()->surface = m_Surface;
+	pixels = (Uint32*)(m_Surface->pixels);
+
+	//mesh.LoadFromObjectFile("assets/mountains.obj");
+	mesh.SetCube(Vec3(0, 0, 0), Vec3(100, 100, 100));
+
+	for (int i = 0; i < 12; i += 2)
+	{
+		mesh.polys[i].uv[0] = Vec2(1, 1);
+		mesh.polys[i].uv[1] = Vec2(0, 1);
+		mesh.polys[i].uv[2] = Vec2(0, 0);
+
+		mesh.polys[i + 1].uv[0] = Vec2(1, 1);
+		mesh.polys[i + 1].uv[1] = Vec2(0, 0);
+		mesh.polys[i + 1].uv[2] = Vec2(0, 1);
+	}
+
+	object.SetMesh(&mesh);
 }
 
 void Game::handleEvents()
@@ -122,15 +139,9 @@ void Game::update()
 
 void Game::render()
 {
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(m_pRenderer, 0, 255, 255, 255);
 	SDL_RenderClear(m_pRenderer);
-	//SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 
-	//D3Renderer::GetInst()->Draw(meshCube);
-	
-	//
-	//object.angle = Vec3(14.f, 0.01f, 0.01f);
-	//object.pos = Vec3(14.f, 0.01f, 100.f);
 	D3Renderer::GetInst()->Draw(object);
 
 	D3Renderer::GetInst()->RenderPresent(m_pRenderer);

@@ -17,10 +17,10 @@ public:
 	//카메라 최소 시야 
 	float near;
 
-	//카메라 최소 시야
+	//카메라 최대 시야
 	float far;
 
-	//카메라 시야각 (Field of View)
+	//카메라 시야각
 	float fov;
 
 public:

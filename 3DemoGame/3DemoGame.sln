@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DemoGame", "3DemoGame.vcxproj", "{91853070-7EAE-4983-A907-DB7677C13329}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TexturingTest", "..\TexturingTest\TexturingTest.vcxproj", "{B6A38403-3ED3-4620-B449-A8FC344D2D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{91853070-7EAE-4983-A907-DB7677C13329}.Release|x64.Build.0 = Release|x64
 		{91853070-7EAE-4983-A907-DB7677C13329}.Release|x86.ActiveCfg = Release|Win32
 		{91853070-7EAE-4983-A907-DB7677C13329}.Release|x86.Build.0 = Release|Win32
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Debug|x64.ActiveCfg = Debug|x64
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Debug|x64.Build.0 = Debug|x64
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Debug|x86.ActiveCfg = Debug|Win32
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Debug|x86.Build.0 = Debug|Win32
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Release|x64.ActiveCfg = Release|x64
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Release|x64.Build.0 = Release|x64
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Release|x86.ActiveCfg = Release|Win32
+		{B6A38403-3ED3-4620-B449-A8FC344D2D0C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

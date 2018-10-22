@@ -2,6 +2,7 @@
 
 #include "defulte.h"
 #include "Camera.h"
+
 class D3Renderer
 {
 #pragma region Single
@@ -24,6 +25,10 @@ public:
 	Camera camera;
 	Vec3 light = { 1.0f, -1.0f, 0.0f };
 
+	//test
+	SDL_Surface* surface;
+	//
+
 private:
 	int screenWidth, screenHeight;
 
@@ -37,13 +42,6 @@ private:
 	vector<Polygon> vecPoly;
 	vector<reference_wrapper<Polygon>> vecInCameraPoly;
 	vector<reference_wrapper<Polygon>> vecCulledPoly;
-
-	struct _Polygon
-	{
-		Polygon poly;
-		Vec3 normalVec;
-		float depth;
-	};
 
 private:
 	D3Renderer() {}
@@ -62,6 +60,12 @@ private:
 
 	void DrawPolygon(SDL_Renderer* pRenderer, Vec3* p, Color color, float b);
 	bool CullOff(Polygon& poly); //후면 처리
+
+	Uint32 GetPixel(SDL_Surface *surface, int x, int y);
+	void TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
+		int x2, int y2, float u2, float v2, float w2,
+		int x3, int y3, float u3, float v3, float w3,
+		SDL_Renderer* pRenderer, SDL_Surface *surface);
 
 public:
 	bool Init(int screenH, int screenW);

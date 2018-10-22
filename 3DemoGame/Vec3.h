@@ -1,6 +1,6 @@
 #pragma once
 #include "Matrix4X4.h"
-
+#include <ppl.h>
 struct Vec3
 {
 public:
@@ -42,12 +42,23 @@ public:
 		return temp;
 	}
 	Vec3 operator * (Matrix4X4 mat) {
-		Vec3 temp;
+		Vec3 temp(0.f,0.f,0.f);
 		temp.x = x * mat.m[0][0] + y * mat.m[1][0] + z * mat.m[2][0] + w * mat.m[3][0];
 		temp.y = x * mat.m[0][1] + y * mat.m[1][1] + z * mat.m[2][1] + w * mat.m[3][1];
 		temp.z = x * mat.m[0][2] + y * mat.m[1][2] + z * mat.m[2][2] + w * mat.m[3][2];
 		temp.w = x * mat.m[0][3] + y * mat.m[1][3] + z * mat.m[2][3] + w * mat.m[3][3];
 		return temp;
+
+		//concurrency::parallel_for(size_t(0), (size_t)4, [&](size_t i)
+		//{
+		//	for (size_t j = 0; j < 4; j++)
+		//	{
+		//		for (int k = 0; k < 4; k++)
+		//		{
+		//			*((float*)(&temp) + k) += *((float*)this+j) + mat.m[j][k];
+		//		}
+		//	}
+		//});
 	}
 	Vec3 operator / (float f)
 	{
@@ -73,11 +84,29 @@ public:
 		z = z * f;
 	}
 	void operator *= (Matrix4X4 mat) {
-		Vec3 temp;
+		Vec3 temp(0.f,0.f,0.f);
 		temp.x = x * mat.m[0][0] + y * mat.m[1][0] + z * mat.m[2][0] + w * mat.m[3][0];
 		temp.y = x * mat.m[0][1] + y * mat.m[1][1] + z * mat.m[2][1] + w * mat.m[3][1];
 		temp.z = x * mat.m[0][2] + y * mat.m[1][2] + z * mat.m[2][2] + w * mat.m[3][2];
 		temp.w = x * mat.m[0][3] + y * mat.m[1][3] + z * mat.m[2][3] + w * mat.m[3][3];
+
+		//Vec3 temp(0.f, 0.f, 0.f, 0.f);
+		//concurrency::parallel_for(size_t(0), size_t(4), [&](size_t i) {
+		//	for (int k = 0; k < 4; k++)
+		//	{
+		//		*((float*)(&temp) + i) += (*((float*)this + k) * mat.m[k][i]);
+		//	}
+		//});
+//		int i,k;
+//#pragma omp parallel for private(i,k)
+//		for (i = 0; i < 4; i++)
+//		{
+//			for (k = 0; k < 4; k++)
+//			{
+//				*((float*)(&temp) + i) += (*((float*)this + k) * mat.m[k][i]);
+//			}
+//		}
+//#pragma omp barrier
 		x = temp.x;
 		y = temp.y;
 		z = temp.z;
