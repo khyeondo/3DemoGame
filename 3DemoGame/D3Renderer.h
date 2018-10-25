@@ -31,6 +31,8 @@ public:
 
 private:
 	int screenWidth, screenHeight;
+	
+	float* pDepthBuffer = 0;
 
 	//원근투영 행렬
 	Matrix4X4 matProj;

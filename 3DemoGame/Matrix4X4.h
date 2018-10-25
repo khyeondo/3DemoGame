@@ -8,7 +8,7 @@ public:
 	float m[4][4] = { 0 };
 
 public:
-	static Matrix4X4 MakeRotationX(Matrix4X4& mat, float angle)
+	static void MakeRotationX(Matrix4X4& mat, float angle)
 	{
 		/*
 		1		0		0		0
@@ -22,9 +22,8 @@ public:
 		mat.m[2][1] = -sinf(angle);
 		mat.m[2][2] = cosf(angle);
 		mat.m[3][3] = 1;
-		return mat;
 	}
-	static Matrix4X4 MakeRotationY(Matrix4X4& mat, float angle)
+	static void MakeRotationY(Matrix4X4& mat, float angle)
 	{
 		/*
 		cos		0		sin		0
@@ -38,9 +37,8 @@ public:
 		mat.m[1][1] = 1.0f;
 		mat.m[2][2] = cosf(angle);
 		mat.m[3][3] = 1.0f;
-		return mat;
 	}
-	static Matrix4X4 MakeRotationZ(Matrix4X4& mat, float angle)
+	static void MakeRotationZ(Matrix4X4& mat, float angle)
 	{
 		/*
 		cos		sin		0		0
@@ -54,15 +52,14 @@ public:
 		mat.m[1][1] = cos(angle);
 		mat.m[2][2] = 1;
 		mat.m[3][3] = 1;
-		return mat;
 	}
+	
 
-	static Matrix4X4 Matrix_MultiplyMatrix(Matrix4X4 &m1, Matrix4X4 &m2)
+
+	static void Matrix_MultiplyMatrix(Matrix4X4 &in1, Matrix4X4 &in2, Matrix4X4 &out)
 	{
-		Matrix4X4 matrix;
 		for (int c = 0; c < 4; c++)
 			for (int r = 0; r < 4; r++)
-				matrix.m[r][c] = m2.m[r][0] * m1.m[0][c] + m2.m[r][1] * m1.m[1][c] + m2.m[r][2] * m1.m[2][c] + m2.m[r][3] * m1.m[3][c];
-		return matrix;
+				out.m[r][c] = in2.m[r][0] * in1.m[0][c] + in2.m[r][1] * in1.m[1][c] + in2.m[r][2] * in1.m[2][c] + in2.m[r][3] * in1.m[3][c];
 	}
 };

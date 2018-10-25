@@ -103,7 +103,8 @@ void D3Renderer::WorldToCamera()
 
 	Vec3 target = { 0,0,1 };
 
-	Matrix4X4 rotate = Matrix4X4::Matrix_MultiplyMatrix(rotateY, rotateX);
+	Matrix4X4 rotate;
+	Matrix4X4::Matrix_MultiplyMatrix(rotateY, rotateX, rotate);
 	rotatedDir *= rotate;
 
 	Vec3 zaxis = (rotatedDir).Normalize();
@@ -147,9 +148,9 @@ void D3Renderer::CameraToViewer()
 		poly.get().vertex[2].y /= poly.get().vertex[2].w;
 		poly.get().vertex[2].z /= poly.get().vertex[2].w;
 
-		poly.get().vertex[0].w = 1.f;
-		poly.get().vertex[1].w = 1.f;
-		poly.get().vertex[2].w = 1.f;
+		//poly.get().vertex[0].w = 1.f;
+		//poly.get().vertex[1].w = 1.f;
+		//poly.get().vertex[2].w = 1.f;
 	}
 }
 
@@ -216,9 +217,9 @@ void D3Renderer::OutPut(SDL_Renderer* pRenderer)
 {
 	for (auto& poly : vecCulledPoly)
 	{
-		TexturedTriangle(poly.get().vertex[0].x, poly.get().vertex[0].y, poly.get().uv[0].x, poly.get().uv[0].y, 1,
-			poly.get().vertex[1].x, poly.get().vertex[1].y, poly.get().uv[1].x, poly.get().uv[1].y, 1,
-			poly.get().vertex[2].x, poly.get().vertex[2].y, poly.get().uv[2].x, poly.get().uv[2].y, 1,
+		TexturedTriangle(poly.get().vertex[0].x, poly.get().vertex[0].y, poly.get().uv[0].x, poly.get().uv[0].y, poly.get().vertex[0].w,
+			poly.get().vertex[1].x, poly.get().vertex[1].y, poly.get().uv[1].x, poly.get().uv[1].y, poly.get().vertex[0].w,
+			poly.get().vertex[2].x, poly.get().vertex[2].y, poly.get().uv[2].x, poly.get().uv[2].y, poly.get().vertex[0].w,
 			pRenderer, surface);
 		//DrawPolygon(pRenderer, poly.get().vertex, Color(255, 255, 255), poly.get().brightness);
 	}
@@ -241,6 +242,7 @@ bool D3Renderer::CullOff(Polygon& poly)
 	Vy.x = poly.vertex[2].x - poly.vertex[1].x;
 	Vy.y = poly.vertex[2].y - poly.vertex[1].y;
 
+	//시계방향
 	S = Vx.x*Vy.y - Vx.y*Vy.x;
 	if (S<0)
 		return true;
@@ -252,6 +254,11 @@ bool D3Renderer::Init(int screenH, int screenW)
 {
 	screenWidth = screenW;
 	screenHeight = screenH;
+
+	pDepthBuffer = new float[screenH * screenW];
+
+	for (int i = 0; i < screenH*screenW; i++)
+		pDepthBuffer[i] = 0;
 
 	camera.near = 0.1f;
 	camera.far = 1000.0f;
@@ -424,10 +431,10 @@ void D3Renderer::TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 				tex_u = (1.0f - t) * tex_su + t * tex_eu;
 				tex_v = (1.0f - t) * tex_sv + t * tex_ev;
 				tex_w = (1.0f - t) * tex_sw + t * tex_ew;
-				//if (tex_w > pDepthBuffer[i*ScreenWidth() + j])
-				//	{
+				if (tex_w > pDepthBuffer[i*screenWidth + j])
+				{
 				//Draw(j, i, tex->SampleGlyph(tex_u / tex_w, tex_v / tex_w), tex->SampleColour(tex_u / tex_w, tex_v / tex_w));
-				Uint32 color = GetPixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
+				Uint32 color = GetPixel(surface, (int)((tex_u)*surface->clip_rect.w/tex_w), (int)((tex_v)*surface->clip_rect.h/tex_w));
 				SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
 					(Uint8)((color & 0x0000FF00) >> 8),
 					(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
@@ -435,8 +442,8 @@ void D3Renderer::TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 
 
 				//Game::DrawTexturePixel(pRenderer, surface, , , j, i);
-				//pDepthBuffer[i*ScreenWidth() + j] = tex_w;
-				//}
+				pDepthBuffer[i*screenWidth + j] = tex_w;
+				}
 				t += tstep;
 			}
 

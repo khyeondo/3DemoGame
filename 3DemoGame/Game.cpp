@@ -46,13 +46,13 @@ void Game::start()
 
 	for (int i = 0; i < 12; i += 2)
 	{
-		mesh.polys[i].uv[0] = Vec2(1, 1);
-		mesh.polys[i].uv[1] = Vec2(0, 1);
-		mesh.polys[i].uv[2] = Vec2(0, 0);
+		mesh.polys[i].uv[0] = Vec2(0, 1);
+		mesh.polys[i].uv[1] = Vec2(0, 0);
+		mesh.polys[i].uv[2] = Vec2(1, 1);
 
 		mesh.polys[i + 1].uv[0] = Vec2(1, 1);
 		mesh.polys[i + 1].uv[1] = Vec2(0, 0);
-		mesh.polys[i + 1].uv[2] = Vec2(0, 1);
+		mesh.polys[i + 1].uv[2] = Vec2(1, 0);
 	}
 
 	object.SetMesh(&mesh);
