@@ -431,10 +431,10 @@ void D3Renderer::TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 				tex_u = (1.0f - t) * tex_su + t * tex_eu;
 				tex_v = (1.0f - t) * tex_sv + t * tex_ev;
 				tex_w = (1.0f - t) * tex_sw + t * tex_ew;
-				if (tex_w > pDepthBuffer[i*screenWidth + j])
+				//if (tex_w > pDepthBuffer[i*screenWidth + j])
 				{
 				//Draw(j, i, tex->SampleGlyph(tex_u / tex_w, tex_v / tex_w), tex->SampleColour(tex_u / tex_w, tex_v / tex_w));
-				Uint32 color = GetPixel(surface, (int)((tex_u)*surface->clip_rect.w/tex_w), (int)((tex_v)*surface->clip_rect.h/tex_w));
+				Uint32 color = GetPixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
 				SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
 					(Uint8)((color & 0x0000FF00) >> 8),
 					(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
