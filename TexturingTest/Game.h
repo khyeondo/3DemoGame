@@ -36,9 +36,12 @@ private:
 	Vec2 vertex[3];
 	UV uv[3];
 
+
 public:
 	static float* pDepthBuffer;
 	static int width, height;
+
+
 	Game() {}
 	~Game() {}
 	bool init(const char* title, int xpos, int ypos,
@@ -50,6 +53,7 @@ public:
 	void clean();
 	bool running() { return m_bRunning; }
 
-	static void DrawTexturePixel(SDL_Renderer* pRenderer, SDL_Surface* pSurface, int tx, int ty,int px,int py);
+	static void DrawSurfacePixel(SDL_Renderer* pRenderer, SDL_Surface* pSurface, int tx, int ty,int px,int py);
+	static void DrawTexturePixel(SDL_Renderer* pRenderer, SDL_Texture* ,int tx, int ty, int px, int py);
 };
 

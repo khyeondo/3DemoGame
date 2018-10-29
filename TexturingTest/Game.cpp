@@ -6,6 +6,8 @@ float* Game::pDepthBuffer = 0;
 int Game::width = 0;
 int Game::height = 0;
 
+SDL_Palette pixels;
+
 void swap(int& a, int& b)
 {
 	int temp = a;
@@ -54,7 +56,7 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
 	}
 }
 
-void Game::DrawTexturePixel(SDL_Renderer* pRenderer, SDL_Surface* pSurface, int tx, int ty,int px,int py)
+void Game::DrawSurfacePixel(SDL_Renderer* pRenderer, SDL_Surface* pSurface, int tx, int ty,int px,int py)
 {
 	Uint32 color = getpixel(pSurface, tx, ty);
 	SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
@@ -63,7 +65,22 @@ void Game::DrawTexturePixel(SDL_Renderer* pRenderer, SDL_Surface* pSurface, int 
 	SDL_RenderDrawPoint(pRenderer, px, py);
 }
 
-void TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
+void Game::DrawTexturePixel(SDL_Renderer * pRenderer, SDL_Texture * pTexture, int tx, int ty, int px, int py)
+{
+	SDL_Rect surce;
+	SDL_Rect dis;
+	surce.x = tx;
+	surce.y = ty;
+	dis.x = px;
+	dis.y = py;
+	surce.h = dis.h = 0;
+	surce.w = dis.w = 0;
+	SDL_RenderCopy(pRenderer, pTexture, &surce, &dis);
+}
+
+
+
+void SurfaceTexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 	int x2, int y2, float u2, float v2, float w2,
 	int x3, int y3, float u3, float v3, float w3,
 	SDL_Renderer* pRenderer,SDL_Surface *surface)
@@ -163,12 +180,12 @@ void TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 				//if (tex_w > pDepthBuffer[i*ScreenWidth() + j])
 			//	{
 					//Draw(j, i, tex->SampleGlyph(tex_u / tex_w, tex_v / tex_w), tex->SampleColour(tex_u / tex_w, tex_v / tex_w));
-				Uint32 color = getpixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
-				SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
-					(Uint8)((color & 0x0000FF00) >> 8),
-					(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
-				SDL_RenderDrawPoint(pRenderer, j, i);
-				
+				//Uint32 color = getpixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
+				//SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
+				//	(Uint8)((color & 0x0000FF00) >> 8),
+				//	(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
+				//SDL_RenderDrawPoint(pRenderer, j, i);
+				Game::DrawSurfacePixel(pRenderer,surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h), i, j);
 
 					//Game::DrawTexturePixel(pRenderer, surface, , , j, i);
 					//pDepthBuffer[i*ScreenWidth() + j] = tex_w;
@@ -232,10 +249,12 @@ void TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 				//if (tex_w > Game::pDepthBuffer[i*Game::width + j])
 				//{
 					Uint32 color = getpixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
-					SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
-						(Uint8)((color & 0x0000FF00) >> 8),
-						(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
-					SDL_RenderDrawPoint(pRenderer, j, i);
+					pixels[i*j] = color;
+
+					//SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
+					//	(Uint8)((color & 0x0000FF00) >> 8),
+					//	(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
+					//SDL_RenderDrawPoint(pRenderer, j, i);
 
 				//}
 				t += tstep;
@@ -244,6 +263,212 @@ void TexturedTriangle(int x1, int y1, float u1, float v1, float w1,
 	}
 }
 
+void TextureTexturedTriangle(int x1, int y1, float u1, float v1, float w1,
+	int x2, int y2, float u2, float v2, float w2,
+	int x3, int y3, float u3, float v3, float w3,
+	SDL_Renderer* pRenderer, SDL_Texture *texture)
+{
+	if (y2 < y1)
+	{
+		swap(y1, y2);
+		swap(x1, x2);
+		swap(u1, u2);
+		swap(v1, v2);
+		swap(w1, w2);
+	}
+
+	if (y3 < y1)
+	{
+		swap(y1, y3);
+		swap(x1, x3);
+		swap(u1, u3);
+		swap(v1, v3);
+		swap(w1, w3);
+	}
+
+	if (y3 < y2)
+	{
+		swap(y2, y3);
+		swap(x2, x3);
+		swap(u2, u3);
+		swap(v2, v3);
+		swap(w2, w3);
+	}
+
+	int dy1 = y2 - y1;
+	int dx1 = x2 - x1;
+	float dv1 = v2 - v1;
+	float du1 = u2 - u1;
+	float dw1 = w2 - w1;
+
+	int dy2 = y3 - y1;
+	int dx2 = x3 - x1;
+	float dv2 = v3 - v1;
+	float du2 = u3 - u1;
+	float dw2 = w3 - w1;
+
+	float tex_u, tex_v, tex_w;
+
+	float dax_step = 0, dbx_step = 0,
+		du1_step = 0, dv1_step = 0,
+		du2_step = 0, dv2_step = 0,
+		dw1_step = 0, dw2_step = 0;
+
+	if (dy1) dax_step = dx1 / (float)abs(dy1);
+	if (dy2) dbx_step = dx2 / (float)abs(dy2);
+
+	if (dy1) du1_step = du1 / (float)abs(dy1);
+	if (dy1) dv1_step = dv1 / (float)abs(dy1);
+	if (dy1) dw1_step = dw1 / (float)abs(dy1);
+
+	if (dy2) du2_step = du2 / (float)abs(dy2);
+	if (dy2) dv2_step = dv2 / (float)abs(dy2);
+	if (dy2) dw2_step = dw2 / (float)abs(dy2);
+
+	if (dy1)
+	{
+		for (int i = y1; i <= y2; i++)
+		{
+			int ax = x1 + (float)(i - y1) * dax_step;
+			int bx = x1 + (float)(i - y1) * dbx_step;
+
+			float tex_su = u1 + (float)(i - y1) * du1_step;
+			float tex_sv = v1 + (float)(i - y1) * dv1_step;
+			float tex_sw = w1 + (float)(i - y1) * dw1_step;
+
+			float tex_eu = u1 + (float)(i - y1) * du2_step;
+			float tex_ev = v1 + (float)(i - y1) * dv2_step;
+			float tex_ew = w1 + (float)(i - y1) * dw2_step;
+
+			if (ax > bx)
+			{
+				swap(ax, bx);
+				swap(tex_su, tex_eu);
+				swap(tex_sv, tex_ev);
+				swap(tex_sw, tex_ew);
+			}
+
+			tex_u = tex_su;
+			tex_v = tex_sv;
+			tex_w = tex_sw;
+
+			float tstep = 1.0f / ((float)(bx - ax));
+			float t = 0.0f;
+
+			for (int j = ax; j < bx; j++)
+			{
+				tex_u = (1.0f - t) * tex_su + t * tex_eu;
+				tex_v = (1.0f - t) * tex_sv + t * tex_ev;
+				tex_w = (1.0f - t) * tex_sw + t * tex_ew;
+				//if (tex_w > pDepthBuffer[i*ScreenWidth() + j])
+				//	{
+				//Draw(j, i, tex->SampleGlyph(tex_u / tex_w, tex_v / tex_w), tex->SampleColour(tex_u / tex_w, tex_v / tex_w));
+				//Uint32 color = getpixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
+				//SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
+				//	(Uint8)((color & 0x0000FF00) >> 8),
+				//	(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
+				//SDL_RenderDrawPoint(pRenderer, j, i);
+				SDL_Rect surce;
+				SDL_Rect dis;
+				int w;
+				int h;
+				SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+				surce.x = (int)((tex_u)*w);
+				surce.y = (int)((tex_v)*h);
+	
+				dis.x = j;
+				dis.y = i;
+				surce.h = dis.h = 1;
+				surce.w = dis.w = 1;
+				SDL_RenderCopy(pRenderer, texture, &surce, &dis);
+				
+				//Game::DrawTexturePixel(pRenderer, surface, , , j, i);
+				//pDepthBuffer[i*ScreenWidth() + j] = tex_w;
+				//}
+				t += tstep;
+			}
+
+		}
+	}
+
+	dy1 = y3 - y2;
+	dx1 = x3 - x2;
+	dv1 = v3 - v2;
+	du1 = u3 - u2;
+	dw1 = w3 - w2;
+
+	if (dy1) dax_step = dx1 / (float)abs(dy1);
+	if (dy2) dbx_step = dx2 / (float)abs(dy2);
+
+	du1_step = 0, dv1_step = 0;
+	if (dy1) du1_step = du1 / (float)abs(dy1);
+	if (dy1) dv1_step = dv1 / (float)abs(dy1);
+	if (dy1) dw1_step = dw1 / (float)abs(dy1);
+
+	if (dy1)
+	{
+		for (int i = y2; i <= y3; i++)
+		{
+			int ax = x2 + (float)(i - y2) * dax_step;
+			int bx = x1 + (float)(i - y1) * dbx_step;
+
+			float tex_su = u2 + (float)(i - y2) * du1_step;
+			float tex_sv = v2 + (float)(i - y2) * dv1_step;
+			float tex_sw = w2 + (float)(i - y2) * dw1_step;
+
+			float tex_eu = u1 + (float)(i - y1) * du2_step;
+			float tex_ev = v1 + (float)(i - y1) * dv2_step;
+			float tex_ew = w1 + (float)(i - y1) * dw2_step;
+
+			if (ax > bx)
+			{
+				swap(ax, bx);
+				swap(tex_su, tex_eu);
+				swap(tex_sv, tex_ev);
+				swap(tex_sw, tex_ew);
+			}
+
+			tex_u = tex_su;
+			tex_v = tex_sv;
+			tex_w = tex_sw;
+
+			float tstep = 1.0f / ((float)(bx - ax));
+			float t = 0.0f;
+
+			for (int j = ax; j < bx; j++)
+			{
+				tex_u = (1.0f - t) * tex_su + t * tex_eu;
+				tex_v = (1.0f - t) * tex_sv + t * tex_ev;
+				tex_w = (1.0f - t) * tex_sw + t * tex_ew;
+
+				//if (tex_w > Game::pDepthBuffer[i*Game::width + j])
+				//{
+				//Uint32 color = getpixel(surface, (int)((tex_u)*surface->clip_rect.w), (int)((tex_v)*surface->clip_rect.h));
+				//SDL_SetRenderDrawColor(pRenderer, (Uint8)((color & 0x00FF0000) >> 16),
+				//	(Uint8)((color & 0x0000FF00) >> 8),
+				//	(Uint8)((color & 0x000000FF)), (Uint8)((color & 0xFF000000) >> 24)); //(Uint8)((color & 0xFF000000) >> 24));
+				//SDL_RenderDrawPoint(pRenderer, j, i);
+
+				SDL_Rect surce;
+				SDL_Rect dis;
+				int w;
+				int h;
+				SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+				surce.x = (int)((tex_u)*w);
+				surce.y = (int)((tex_v)*h);
+				
+				dis.x = j;
+				dis.y = i;
+				surce.h = dis.h = 1;
+				surce.w = dis.w = 1;
+				SDL_RenderCopy(pRenderer, texture, &surce, &dis);
+
+				//}
+				t += tstep;
+			}
+		}
+	}
+}
 
 bool Game::init(const char * title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -274,6 +499,7 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 
 	screenWidth = width;
 	screenHeight = height;
+
 
 	strcpy_s(windowTitle, 20, (char*)title);
 
@@ -313,11 +539,16 @@ void Game::render()
 	//	float u = (t - vertex[2].x) / (vertex[0].x - vertex[1].x);
 	//	DrawTexturePixel(m_pRenderer,m_Surface, u,1 , t, y);
 	//}
-	TexturedTriangle(vertex[0].x, vertex[0].y, uv[0].u, uv[0].v,0.f,
+	SurfaceTexturedTriangle(vertex[0].x, vertex[0].y, uv[0].u, uv[0].v,0.f,
 		vertex[1].x, vertex[1].y, uv[1].u, uv[1].v,0.f,
 		vertex[2].x, vertex[2].y, uv[2].u, uv[2].v,0.f,
 		m_pRenderer, m_Surface);
-	SDL_RenderPresent(m_pRenderer);
+	//TextureTexturedTriangle(vertex[0].x, vertex[0].y, uv[0].u, uv[0].v, 0.f,
+	//	vertex[1].x, vertex[1].y, uv[1].u, uv[1].v, 0.f,
+	//	vertex[2].x, vertex[2].y, uv[2].u, uv[2].v, 0.f,
+	//	m_pRenderer, m_pTexture);
+
+
 
 
 	fps = 1000.0f / (float)(SDL_GetTicks() - startTick);
