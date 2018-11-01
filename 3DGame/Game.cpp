@@ -33,7 +33,7 @@ bool Game::init(const char * title, int xpos, int ypos, int width, int height, b
 
 	strcpy_s(windowTitle,20 ,(char*)title);
 
-	m_pCamera = new Camera(Vec3(0.f, 0.f, -10000.f), Vec3(0.f, 0.f, -1.f), 0.1f, 1000.f, 90.f);
+	m_pCamera = new Camera(Vec3(0.f, 0.f, -100.f), Vec3(0.f, 0.f, -1.f), 0.1f, 1000.f, 90.f);
 
 	Renderer3D::Instance()->Init(m_pRenderer, m_pCamera, Vec3(0.f, 1.f, 0.f), width, height);
 
@@ -46,7 +46,8 @@ void Game::start()
 	m_Surface = IMG_Load("assets/rider.bmp");
 
 	//mesh.LoadFromObjectFile("assets/mountains.obj");
-	mesh.SetCube(Vec3(0.f, 0.f, 0.f), Vec3(0.5, 0.5, 0.5));
+	mesh.SetCube(Vec3(0.f, 0.f, 0.f), Vec3(10, 10, 10));
+	//mesh.LoadFromObjectFile("assets/teaPot.obj");
 
 	for (int i = 0; i < 12; i += 2)
 	{
@@ -60,6 +61,7 @@ void Game::start()
 	}
 
 	m_pGameObject = new GameObject3D(m_Surface, &mesh);
+	((GameObject3D*)m_pGameObject)->RefScale().x = 0.5f;
 }
 
 void Game::handleEvents()
@@ -91,9 +93,9 @@ void Game::update()
 	//object.angle += Vec3(0.05f, 0.05f, 0.05f);
 	Matrix4X4 rotateY;
 	Matrix4X4::MakeRotationY(rotateY, 0.01f);
-	Renderer3D::Instance()->RefLight() *= rotateY;
+	//Renderer3D::Instance()->RefLight() *= rotateY;
 
-	((GameObject3D*)m_pGameObject)->RefAngle() += Vec3(0.01f,0.01f, 0.01f);
+	//((GameObject3D*)m_pGameObject)->RefAngle() += Vec3(0.01f,0.01f, 0.01f);
 
 	if (isKeyHolding[SDLK_a])
 	{

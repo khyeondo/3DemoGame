@@ -5,7 +5,7 @@
 void Matrix4X4::MakeProjectionMatrix(Matrix4X4 & mat, int fov, int near, int far, int screenW, int screenH)
 {
 	float aspect = (float)screenH / (float)screenW;
-	float yScale = 1.0f / tanf(fov*0.5f / 180.0f* 3.141592f);
+	float yScale = 1.0f / tanf((fov*0.5f) / 180.0f* 3.141592f);
 	float xScale = yScale / aspect;
 	//Âü°í:https://docs.microsoft.com/en-us/windows/desktop/direct3d9/d3dxmatrixperspectivefovlh
 	/*
@@ -17,8 +17,8 @@ void Matrix4X4::MakeProjectionMatrix(Matrix4X4 & mat, int fov, int near, int far
 	mat.m[0][0] = xScale;
 	mat.m[1][1] = yScale;
 	mat.m[2][2] = far / (far - near);
-	mat.m[3][2] = 1.f;
-	mat.m[2][3] = (-near * far) / (far - near);
+	mat.m[2][3] = 1.f;
+	mat.m[3][2] = (-near * far) / (far - near);
 
 	//float screenRatio = (float)screenH / (float)screenW;
 	//float fovTan = 1.0f / tanf(fov*0.5f / 180.0f* 3.141592f);

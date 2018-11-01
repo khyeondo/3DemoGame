@@ -51,8 +51,8 @@ void Renderer3D::Rendering(GameObject3D * pGameObject3D)
 	vector<reference_wrapper<Polygon>> culledPolys;
 
 	WorldSpace(pGameObject3D, polys);
-	ViewSpace(polys);
 	BackfaceCulling(polys, culledPolys);
+	ViewSpace(culledPolys);
 	Projection(culledPolys);
 	Viewport(culledPolys);
 	DrawPolygons(culledPolys);
@@ -102,17 +102,6 @@ void Renderer3D::WorldSpace(GameObject3D * pGameObject, vector<Polygon>& polys)
 	}
 }
 
-void Renderer3D::ViewSpace(vector<Polygon>& polys)
-{
-	Matrix4X4::MakeLookAtMatrix(m_matLootAt, m_pCamera->pos, m_pCamera->lookAt, Vec3(0, 1, 0));
-	for (Polygon& poly : polys)
-	{
-		poly.vertex[0] *= m_matLootAt;
-		poly.vertex[1] *= m_matLootAt;
-		poly.vertex[2] *= m_matLootAt;
-	}
-}
-
 void Renderer3D::BackfaceCulling(vector<Polygon>& polys, vector<reference_wrapper<Polygon>>& culledPolys)
 {
 	for (Polygon& poly : polys)
@@ -128,6 +117,17 @@ void Renderer3D::BackfaceCulling(vector<Polygon>& polys, vector<reference_wrappe
 		{
 			culledPolys.push_back(poly);
 		}
+	}
+}
+
+void Renderer3D::ViewSpace(vector<reference_wrapper<Polygon>>& culledPolys)
+{
+	Matrix4X4::MakeLookAtMatrix(m_matLootAt, m_pCamera->pos, m_pCamera->lookAt, Vec3(0, 1, 0));
+	for (Polygon& poly : culledPolys)
+	{
+		poly.vertex[0] *= m_matLootAt;
+		poly.vertex[1] *= m_matLootAt;
+		poly.vertex[2] *= m_matLootAt;
 	}
 }
 
@@ -151,6 +151,25 @@ void Renderer3D::Projection(vector<reference_wrapper<Polygon>>& culledPolys)
 		poly.vertex[0] *= m_matProj;
 		poly.vertex[1] *= m_matProj;
 		poly.vertex[2] *= m_matProj;
+
+		//poly.vertex[0].x /= poly.vertex[0].w;
+		//poly.vertex[1].x /= poly.vertex[1].w;
+		//poly.vertex[2].x /= poly.vertex[2].w;
+		//								   
+		//poly.vertex[0].y /= poly.vertex[0].w;
+		//poly.vertex[1].y /= poly.vertex[1].w;
+		//poly.vertex[2].y /= poly.vertex[2].w;
+		poly.vertex[0].x /= poly.vertex[0].z;
+		poly.vertex[0].y /= poly.vertex[0].z;
+		poly.vertex[0].z /= poly.vertex[0].z;
+										   
+		poly.vertex[1].x /= poly.vertex[1].z;
+		poly.vertex[1].y /= poly.vertex[1].z;
+		poly.vertex[1].z /= poly.vertex[1].z;
+										   
+		poly.vertex[2].x /= poly.vertex[2].z;
+		poly.vertex[2].y /= poly.vertex[2].z;
+		poly.vertex[2].z /= poly.vertex[2].z;
 	}
 }
 
@@ -172,7 +191,7 @@ void Renderer3D::DrawPolygons(vector<reference_wrapper<Polygon>>& culledPolys)
 {
 	for (Polygon& poly : culledPolys)
 	{
-		DrawPolygon(poly.vertex, Color(255, 255, 255), 0.5f);
+		DrawPolygon(poly.vertex, Color(255, 255, 255), poly.brightness);
 	}
 }
 

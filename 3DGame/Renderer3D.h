@@ -67,8 +67,8 @@ public:
 
 private:
 	void WorldSpace(GameObject3D* pGameObject,vector<Polygon>& polys);
-	void ViewSpace(vector<Polygon>& polys);
 	void BackfaceCulling(vector<Polygon>& polys, vector<reference_wrapper<Polygon>>& culledPolys);
+	void ViewSpace(vector<reference_wrapper<Polygon>>& culledPolys);
 	void Shading(vector<reference_wrapper<Polygon>>& culledPolys);
 	void Projection(vector<reference_wrapper<Polygon>>& culledPolys);
 	void Viewport(vector<reference_wrapper<Polygon>>& culledPolys);

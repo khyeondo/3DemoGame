@@ -7,7 +7,7 @@ class Vec3;
 struct Matrix4X4
 {
 public:
-	//[열][행]
+	//[행][열]
 	float m[4][4] = { 0 };
 
 public:
