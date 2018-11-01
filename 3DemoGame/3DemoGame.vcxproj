@@ -125,12 +125,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="D3Renderer.cpp" />
     <ClCompile Include="SDL2_gfxPrimitives.c" />
     <ClCompile Include="SDL2_rotozoom.c" />
     <ClCompile Include="D3Object.cpp" />
+    <ClCompile Include="Renderer3D.cpp" />
+    <ClCompile Include="GameObject3D.cpp" />
+    <ClCompile Include="Camera1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -143,10 +147,15 @@
     <ClInclude Include="Matrix4X4.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="D3Renderer.h" />
-    <ClInclude Include="Structs.h" />
     <ClInclude Include="D3Object.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Renderer3D.h" />
+    <ClInclude Include="GameObject3D.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Camera1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

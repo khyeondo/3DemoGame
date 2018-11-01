@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "Vec2.h"
 
 Game* Game::m_pinst = 0;
 
@@ -92,32 +93,32 @@ void Game::update()
 	if (isKeyHolding[SDLK_a])
 	{
 		D3Renderer::GetInst()->camera.pos.x -= 3.f;
-		D3Renderer::GetInst()->camera.lookDir.x -= 3.f;
+		D3Renderer::GetInst()->camera.lookAt.x -= 3.f;
 	}
 	if (isKeyHolding[SDLK_d])
 	{
 		D3Renderer::GetInst()->camera.pos.x += 3.f;
-		D3Renderer::GetInst()->camera.lookDir.x += 3.f;
+		D3Renderer::GetInst()->camera.lookAt.x += 3.f;
 	}
 	if (isKeyHolding[SDLK_w])
 	{
 		D3Renderer::GetInst()->camera.pos.z += 3.f;
-		D3Renderer::GetInst()->camera.lookDir.z += 3.f;
+		D3Renderer::GetInst()->camera.lookAt.z += 3.f;
 	}
 	if (isKeyHolding[SDLK_s])
 	{
 		D3Renderer::GetInst()->camera.pos.z -= 3.f;
-		D3Renderer::GetInst()->camera.lookDir.z -= 3.f;
+		D3Renderer::GetInst()->camera.lookAt.z -= 3.f;
 	}
 	if (isKeyHolding[SDLK_z])
 	{
 		D3Renderer::GetInst()->camera.pos.y += 3.0f;
-		D3Renderer::GetInst()->camera.lookDir.y += 3.0f;
+		D3Renderer::GetInst()->camera.lookAt.y += 3.0f;
 	}
 	if (isKeyHolding[SDLK_x])
 	{
 		D3Renderer::GetInst()->camera.pos.y -= 3.0f;
-		D3Renderer::GetInst()->camera.lookDir.y -= 3.0f;
+		D3Renderer::GetInst()->camera.lookAt.y -= 3.0f;
 	}
 	if (isKeyHolding[SDLK_UP % 107374100])
 	{

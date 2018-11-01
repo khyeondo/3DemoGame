@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01.Game">
+      <UniqueIdentifier>{aaaa2c70-c6fd-447e-b9d6-d69b7f726129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D">
+      <UniqueIdentifier>{c294eae3-d91a-49fa-bdd8-dd694b31ab31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\01.Renderer3D">
+      <UniqueIdentifier>{f05df28f-7047-49cd-9cdd-f18ac9d4cda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Vector">
+      <UniqueIdentifier>{13b3a429-2b66-48f8-adc6-f7f7404e6970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Vector\02.Vec3">
+      <UniqueIdentifier>{8fc0a27c-afcc-40ec-aae0-7fa85dcb09ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\03.Polygon">
+      <UniqueIdentifier>{fa854ddd-0103-4714-a009-a3db28ed7e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\02.Matrix4X4">
+      <UniqueIdentifier>{ffe7a45d-a66e-4e13-b00a-c4a9a4870a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.GameObject">
+      <UniqueIdentifier>{3e72fe73-e93e-4e70-8f67-50d42822c452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.GameObject2D">
+      <UniqueIdentifier>{ebe3d256-8d73-46f9-b373-000664b2280b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.GamaeObject3D">
+      <UniqueIdentifier>{38f5491c-1406-48be-b9fa-932a6df6212a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\04.Mesh">
+      <UniqueIdentifier>{c080d228-c417-47d8-bc4d-2e3186ef60ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\01.render">
+      <UniqueIdentifier>{e484168e-74af-45f5-8aab-96dc89ed1499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Render3D\05.Camera">
+      <UniqueIdentifier>{95a8ca3f-306a-4528-aced-f1c9ac248949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Vector\01.Vec2">
+      <UniqueIdentifier>{9d67555a-f8ac-4b8f-8404-fa0a2c21dcf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL2_gfxPrimitives">
+      <UniqueIdentifier>{93819fb2-ef7f-48df-bd67-5f5fb7521f5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>01.Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer3D.cpp">
+      <Filter>02.Render3D\01.Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="D3Renderer.cpp">
+      <Filter>02.Render3D\01.render</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject3D.cpp">
+      <Filter>06.GamaeObject3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera1.cpp">
+      <Filter>02.Render3D\05.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="D3Object.cpp">
+      <Filter>06.GamaeObject3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4X4.cpp">
+      <Filter>02.Render3D\02.Matrix4X4</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_rotozoom.c">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfxPrimitives.c">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>01.Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer3D.h">
+      <Filter>02.Render3D\01.Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>03.Vector\01.Vec2</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3.h">
+      <Filter>03.Vector\02.Vec3</Filter>
+    </ClInclude>
+    <ClInclude Include="D3Renderer.h">
+      <Filter>02.Render3D\01.render</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4X4.h">
+      <Filter>02.Render3D\02.Matrix4X4</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>02.Render3D\03.Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>04.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>02.Render3D\04.Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="defulte.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject3D.h">
+      <Filter>06.GamaeObject3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>02.Render3D\05.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera1.h">
+      <Filter>02.Render3D\05.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="D3Object.h">
+      <Filter>06.GamaeObject3D</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives_font.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_rotozoom.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2_gfxPrimitives.h">
+      <Filter>SDL2_gfxPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -9,39 +9,60 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{46aaabcb-75c1-42ce-ba1a-00ba0c9195b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender">
-      <UniqueIdentifier>{7ca5f959-dd92-469f-8d2c-5cc75d5b1b0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Structs">
-      <UniqueIdentifier>{ca9c6e58-34d4-4e7a-b8f5-8ee6bad996e2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SDL2_gfxPrimitives">
       <UniqueIdentifier>{35810826-f26a-4243-afe0-ca0e25969b4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\02.Camera">
-      <UniqueIdentifier>{cebdbbb4-0ca1-4a64-9f50-02dcc8f718cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\01.D3Renderer">
-      <UniqueIdentifier>{5d55af7d-697c-4e8e-bf8c-0e6e4fe92e11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\03.Vec3">
-      <UniqueIdentifier>{70cb4690-f8a4-4ac3-ac2f-c3fa736a9fb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\05.Mesh">
-      <UniqueIdentifier>{9fc5c1cf-3708-49b7-8eb8-b6ed52994a2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\06.D3Object">
-      <UniqueIdentifier>{7178e946-d893-48c1-95fc-c74c96df2867}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DRender\04.Polygon">
-      <UniqueIdentifier>{c765ca25-6e81-48f2-b857-aa5115a67e80}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="01.Game">
+      <UniqueIdentifier>{46aaabcb-75c1-42ce-ba1a-00ba0c9195b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender">
+      <UniqueIdentifier>{7ca5f959-dd92-469f-8d2c-5cc75d5b1b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\01.D3Renderer">
+      <UniqueIdentifier>{5d55af7d-697c-4e8e-bf8c-0e6e4fe92e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\05.Mesh">
+      <UniqueIdentifier>{9fc5c1cf-3708-49b7-8eb8-b6ed52994a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\06.D3Object">
+      <UniqueIdentifier>{7178e946-d893-48c1-95fc-c74c96df2867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\01.Renderer3D">
+      <UniqueIdentifier>{d0b7a0a5-ecd1-4bcb-9e71-0d0454d1b2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject">
+      <UniqueIdentifier>{6fdb9f23-d6cc-437a-b394-c9fa01b87d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.GameObject3D">
+      <UniqueIdentifier>{e37b3685-37eb-455e-9ad3-1ccac2ba212e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.GameObject2D">
+      <UniqueIdentifier>{bdf5a1ed-afd8-4959-832c-1b36a1a5572e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Vector">
+      <UniqueIdentifier>{51929dad-d0a2-4021-9ccc-88bec070b363}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Vector\01.Vec2">
+      <UniqueIdentifier>{04039569-477b-4b35-997c-11b3cfb97632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Vector\02.Vec3">
+      <UniqueIdentifier>{70cb4690-f8a4-4ac3-ac2f-c3fa736a9fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\03.Camera">
+      <UniqueIdentifier>{cebdbbb4-0ca1-4a64-9f50-02dcc8f718cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\02.Matrix4X4">
+      <UniqueIdentifier>{fe023163-4ad0-4040-a4a9-5720c1dcac72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\07.Color">
+      <UniqueIdentifier>{fdbec993-c105-4db9-b7ca-f1aa6622e177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.3DRender\04.Polygon">
+      <UniqueIdentifier>{c765ca25-6e81-48f2-b857-aa5115a67e80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,10 +70,10 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Game</Filter>
+      <Filter>01.Game</Filter>
     </ClCompile>
     <ClCompile Include="D3Renderer.cpp">
-      <Filter>3DRender\01.D3Renderer</Filter>
+      <Filter>03.3DRender\01.D3Renderer</Filter>
     </ClCompile>
     <ClCompile Include="SDL2_rotozoom.c">
       <Filter>SDL2_gfxPrimitives</Filter>
@@ -61,12 +82,24 @@
       <Filter>SDL2_gfxPrimitives</Filter>
     </ClCompile>
     <ClCompile Include="D3Object.cpp">
-      <Filter>3DRender\06.D3Object</Filter>
+      <Filter>03.3DRender\06.D3Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer3D.cpp">
+      <Filter>03.3DRender\01.Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject3D.cpp">
+      <Filter>05.GameObject3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera1.cpp">
+      <Filter>03.3DRender\03.Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Game</Filter>
+      <Filter>01.Game</Filter>
     </ClInclude>
     <ClInclude Include="define.h">
       <Filter>헤더 파일</Filter>
@@ -75,13 +108,10 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>3DRender\02.Camera</Filter>
+      <Filter>03.3DRender\03.Camera</Filter>
     </ClInclude>
     <ClInclude Include="D3Renderer.h">
-      <Filter>3DRender\01.D3Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4X4.h">
-      <Filter>헤더 파일\Structs</Filter>
+      <Filter>03.3DRender\01.D3Renderer</Filter>
     </ClInclude>
     <ClInclude Include="SDL2_gfxPrimitives_font.h">
       <Filter>SDL2_gfxPrimitives</Filter>
@@ -92,20 +122,38 @@
     <ClInclude Include="SDL2_gfxPrimitives.h">
       <Filter>SDL2_gfxPrimitives</Filter>
     </ClInclude>
-    <ClInclude Include="Structs.h">
-      <Filter>헤더 파일\Structs</Filter>
-    </ClInclude>
     <ClInclude Include="D3Object.h">
-      <Filter>3DRender\06.D3Object</Filter>
+      <Filter>03.3DRender\06.D3Object</Filter>
     </ClInclude>
     <ClInclude Include="Polygon.h">
-      <Filter>3DRender\04.Polygon</Filter>
+      <Filter>03.3DRender\04.Polygon</Filter>
     </ClInclude>
     <ClInclude Include="Vec3.h">
-      <Filter>3DRender\03.Vec3</Filter>
+      <Filter>06.Vector\02.Vec3</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>3DRender\05.Mesh</Filter>
+      <Filter>03.3DRender\05.Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer3D.h">
+      <Filter>03.3DRender\01.Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject3D.h">
+      <Filter>05.GameObject3D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>02.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>06.Vector\01.Vec2</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4X4.h">
+      <Filter>03.3DRender\02.Matrix4X4</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>03.3DRender\07.Color</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera1.h">
+      <Filter>03.3DRender\03.Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
